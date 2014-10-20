@@ -1,18 +1,18 @@
-functional-website
+Functional design for a website.
 ==================
 
 Simple template showing how a website looks like applying functional concepts
 
 The base of Functional design is to use composition everywhere and reuse as much as possible pure functions. Another strong concept in the Haskell language family (Scala, F# and other funcional programming with strong type system) also tend to _type everything_.
 
-## Core type of code
+##Core type of code
 
 In most application, the code either:
 * move data from one layer to another
 * transform data to comply with other layer contract
 * process business values
 
-## Application design
+##Application design
 
 In the current version, I forced seperated:
 * entrypoint: Controller action: [Application.scala](https://github.com/toff63/functional-website/blob/master/app/controllers/Application.scala)
@@ -24,6 +24,6 @@ In the current version, I forced seperated:
 
 I also created test to demo how to simulate flow stubing the Dao: [MyWebsiteDataFlowTest.scala](https://github.com/toff63/functional-website/blob/master/test/dataflow/MyWebsiteDataFlowTest.scala)
 
-## TODO
+##TODO
 
 I am quiete happy with the current design. However, I would like to add typing to ease the implementation of new features and the creation of more validations. I also need to illustrate the idea of ViewModel.
