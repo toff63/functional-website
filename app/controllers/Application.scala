@@ -2,26 +2,21 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import service._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import components.MyWebsiteComponents
+import dataflow.MyWebsiteDataFlow
 
-object Application extends Controller {
 
-  val personService:PersonService = new PersonService
-  val dogService:DogService = new DogService
-  
-  def index = Action.async {
-    johnAndBullAgesIn30Years.map{ages  => 
-      val (johnAge, bullAge) = ages
-      Ok(s"John will be $johnAge in 30 years and his dog will be $bullAge")
+object Application extends Controller with MyWebsiteComponents with MyWebsiteDataFlow{
+ 
+  def index = Action.async{
+    (for{
+      johnAgeIn30Years <- personAgeIn30Years(1)
+      bullAgeIn30Years <- dogAgeIn30Years(1)
+    } yield  Ok(s"John will be $johnAgeIn30Years in 30 years and his dog will be $bullAgeIn30Years"))
+    .recover{
+      case _:Throwable => Ok("Currently have issues to retrieve data.")
     }
   }
-
-  def johnAndBullAgesIn30Years = for{
-      johnAgeIn30Years <- personService.ageIn30Years(1)
-      bullAgeIn30Years <- dogService.ageIn30Years(1)
-    }yield (johnAgeIn30Years, bullAgeIn30Years)
 }
-
-
