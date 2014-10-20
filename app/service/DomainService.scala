@@ -25,7 +25,8 @@ object Dog{
  * any mock or context to test them. They should be very easy to reuse!!
  */
 object AgeBusinessRules{
-  def ageIn30Years(person:WithAge):Int = person.age + 30
+  def ageIn30Years(person:WithAge):Int = ageIn(30, person)
+  def ageIn(yearsToAdd:Int, person:WithAge):Int = person.age + yearsToAdd
 }
 
 object Validation {

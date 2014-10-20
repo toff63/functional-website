@@ -9,13 +9,13 @@ import dataflow.MyWebsiteDataFlow
 
 object Application extends Controller with MyWebsiteComponents with MyWebsiteDataFlow {
 
-  def index = personAndDogAgeIn30Years(1)
+  def index = personAndDogAge(1, 30)
 
-  def personAndDogAgeIn30Years(id: Int) = Action.async {
+  def personAndDogAge(id: Int, yearsToAdd:Int) = Action.async {
     (for {
-      johnAgeIn30Years <- personAgeIn30Years(id)
+      johnAgeIn30Years <- personAgeIn(id, yearsToAdd)
       bullAgeIn30Years <- dogAgeIn30Years(id)
-    } yield Ok(s"John will be $johnAgeIn30Years in 30 years and his dog will be $bullAgeIn30Years"))
+    } yield Ok(s"John will be $johnAgeIn30Years in $yearsToAdd years and his dog will be $bullAgeIn30Years in 30 years"))
       .recover {
         case _: Throwable => Ok("Currently have issues to retrieve data.")
       }

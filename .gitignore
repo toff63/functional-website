@@ -16,5 +16,5 @@ server.pid
 /dist/
 .cache
 
-*.classpath
-.settings/*
+.classpath
+/.settings/*

@@ -7,12 +7,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Try, Success, Failure}
 
 trait MyWebsiteDataFlow { this: MyWebsiteComponents =>
-  def personAgeIn30Years(id: Int): Future[Int] =
+  def personAgeIn(id: Int, yearsToAdd:Int): Future[Int] = {
+    val ageInYears = AgeBusinessRules.ageIn(yearsToAdd, _:Person) 
+    val age = ageInYears compose Person.fromDao _
+
     for {
       validatedId <- tryToFuture(Validation.validate(id))
       person <- personDao.find(validatedId)
-      age = AgeBusinessRules.ageIn30Years _ compose Person.fromDao _
     } yield age(person)
+    
+  }
     
   def dogAgeIn30Years(id: Int): Future[Int] = dogDao.find(id).map(AgeBusinessRules.ageIn30Years _ compose Dog.fromDao _)
 
