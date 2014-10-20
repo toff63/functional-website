@@ -21,7 +21,7 @@ class MyWebsiteDataFlowTest extends Specification {
 
   "MyWebsiteDataFlowTest" should {
     "Return an error if connection to databse is lost" in {
-      Await.result((new MyDaoFailingFlow).personAgeIn30Years(1).recover{case _:RuntimeException => 0}, Duration.Inf) == 0
+      Await.result((new MyDaoFailingFlow).personAgeIn(1, 30).recover{case _:RuntimeException => 0}, Duration.Inf) == 0
     }
   }
 }
