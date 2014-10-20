@@ -5,6 +5,7 @@ import model.DogDao
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import model.{Person => DaoPerson, Dog => DaoDog}
+import scala.util.{Try, Failure, Success}
 
 trait WithAge{val age:Int}
 
@@ -25,4 +26,8 @@ object Dog{
  */
 object AgeBusinessRules{
   def ageIn30Years(person:WithAge):Int = person.age + 30
+}
+
+object Validation {
+  def validate(id:Int):Try[Int] = if(id < 0) Failure(new RuntimeException("Id must be positive")) else Success(id)
 }
